@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MainPage from './styles/mainPage';
-import Posts from './components/posts';
+import Posts from './containers/Posts';
 
 function App() {
   return (
