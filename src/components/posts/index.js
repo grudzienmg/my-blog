@@ -1,11 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { isEmpty } from 'lodash-es';
 
-const Posts = ({...props}) => {
+import Post from './styles/post';
+import Title from './styles/title';
+
+const Posts = ({getPosts, posts}) => {
   useEffect(() => {
-    props.getPosts();
+    getPosts();
   }, []);
 
-  return (<div>test123</div>);
+  const renderPosts = () => {
+    return !isEmpty(posts) && posts.map((i, index) => {
+      return (
+        <Post key={index}>
+          <Title>{i.title}</Title>
+          <p>{i.body}</p>
+        </Post>
+      )
+    })
+  }
+
+  return (
+    <Fragment>
+      {renderPosts()}
+    </Fragment>
+  );
 }
 
 export default Posts;
