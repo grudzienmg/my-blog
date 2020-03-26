@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash-es';
 
 import Post from './styles/post';
 import Title from './styles/title';
+import Button from '../../atoms/Button';
 
 const Posts = ({getPosts, posts}) => {
   useEffect(() => {
@@ -15,6 +16,7 @@ const Posts = ({getPosts, posts}) => {
         <Post key={index}>
           <Title>{i.title}</Title>
           <p>{i.body}</p>
+          <Button name='Pokaż komentarze' />
         </Post>
       )
     })
