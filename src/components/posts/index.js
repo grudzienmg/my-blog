@@ -5,18 +5,19 @@ import Post from './styles/post';
 import Title from './styles/title';
 import Button from '../../atoms/Button';
 
-const Posts = ({getPosts, posts}) => {
+const Posts = ({...props}) => {
   useEffect(() => {
-    getPosts();
+    props.getPosts();
   }, []);
 
   const renderPosts = () => {
-    return !isEmpty(posts) && posts.map((i, index) => {
+    return !isEmpty(props.posts) && props.posts.map((i, index) => {
       return (
         <Post key={index}>
           <Title>{i.title}</Title>
           <p>{i.body}</p>
-          <Button name='Pokaż komentarze' />
+          <Button name='Pokaż komentarze' onClick={() => props.getPostComments(i.id)}/>
+          {i.comments && <p>i have comments</p>}
         </Post>
       )
     })
