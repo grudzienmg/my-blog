@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import SingleComment from './styles/singleComment';
 
-const Comments = ({data}) => {
+const Comments = ({data, isFetching}) => {
   const renderComments = () => {
-    return data.map((comment, index) => {
+    return data && data.map((comment, index) => {
       return (
         <SingleComment key={index}>
           <span>{comment.name} / {comment.email}</span>
@@ -15,9 +15,9 @@ const Comments = ({data}) => {
   };
 
   return (
-    <div>
-      {renderComments()}
-    </div>
+    <Fragment>
+      {isFetching ? <div>Wczytuję dane...</div> : renderComments()}
+    </Fragment>
   );
 }
 
