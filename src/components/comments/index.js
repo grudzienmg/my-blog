@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
 import SingleComment from './styles/singleComment';
+import Form from '../form';
 
 const Comments = ({data, isFetching}) => {
   const renderComments = () => {
@@ -14,9 +15,22 @@ const Comments = ({data, isFetching}) => {
     })
   };
 
+  const renderContent = () => {
+    if (isFetching) {
+      return (<div>Wczytuję dane...</div>);
+    } else {
+      return (
+        <Fragment>
+          {renderComments()}
+          <Form />
+        </Fragment>
+      );
+    }
+  }
+
   return (
     <Fragment>
-      {isFetching ? <div>Wczytuję dane...</div> : renderComments()}
+      {renderContent()}
     </Fragment>
   );
 }
