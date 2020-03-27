@@ -27,14 +27,47 @@ class Form extends Component {
     return formValues.name && formValues.email && formValues.body;
   }
 
+  handleClick = () => {
+    const payload = {
+      postId: this.props.postId,
+      id: Math.floor(Math.random() * 100),
+      ...this.state.formValues,
+    };
+
+    this.props.addComment(this.props.postId, payload);
+
+    this.setState({
+      formValues: {
+        name: '',
+        email: '',
+        body: '',
+      }
+    });
+  }
+
   render() {
+    const { formValues } = this.state;
+
     return (
       <Fragment>
         <div>Dodaj komentarz:</div>
-        <Input label={'Imię'} onChange={e => this.handleInputChange(e.target.value, 'name')} />
-        <Input label={'E-mail'} onChange={e => this.handleInputChange(e.target.value, 'email')} />
-        <Input label={'Treść'} textarea onChange={e => this.handleInputChange(e.target.value, 'body')} />
-        <Button name={'Wyślij'} disabled={!this.canConfirm()}/>
+        <Input
+          label={'Imię'}
+          onChange={e => this.handleInputChange(e.target.value, 'name')}
+          value={formValues.name}
+          />
+        <Input
+          label={'E-mail'}
+          onChange={e => this.handleInputChange(e.target.value, 'email')}
+          value={formValues.email}
+        />
+        <Input
+          label={'Treść'}
+          textarea
+          onChange={e => this.handleInputChange(e.target.value, 'body')}
+          value={formValues.body}
+        />
+        <Button name={'Wyślij'} disabled={!this.canConfirm()} onClick={this.handleClick}/>
       </Fragment>
     );
   }

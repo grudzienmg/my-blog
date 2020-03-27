@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import SingleComment from './styles/singleComment';
 import Form from '../form';
 
-const Comments = ({data, isFetching}) => {
+const Comments = ({addComment, data, isFetching}) => {
   const renderComments = () => {
     return data && data.map((comment, index) => {
       return (
@@ -22,7 +22,7 @@ const Comments = ({data, isFetching}) => {
       return (
         <Fragment>
           {renderComments()}
-          <Form />
+          <Form addComment={addComment} postId={data[0].postId} />
         </Fragment>
       );
     }

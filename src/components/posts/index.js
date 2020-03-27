@@ -30,7 +30,12 @@ const Posts = ({...props}) => {
           <Title>{i.title}</Title>
           <p>{i.body}</p>
           <Button name={isExpanded ? 'Ukryj komentarze' : 'Pokaż komentarze'} onClick={() => handleClick(i.id)}/>
-          {isExpanded && <Comments data={i.comments} isFetching={props.areCommentsFetching} />}
+          {isExpanded && <Comments
+            data={i.comments}
+            isFetching={props.areCommentsFetching}
+            addComment={props.addComment}
+            />
+          }
         </Post>
       )
     })

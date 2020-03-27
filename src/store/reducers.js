@@ -1,6 +1,7 @@
 import {
   GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE,
-  GET_POST_COMMENTS, GET_POST_COMMENTS_SUCCESS, GET_POST_COMMENTS_FAILURE
+  GET_POST_COMMENTS, GET_POST_COMMENTS_SUCCESS, GET_POST_COMMENTS_FAILURE,
+  ADD_COMMENT,
 } from './actionTypes';
 
 const initialState = {
@@ -49,6 +50,15 @@ export default (state=initialState, action) => {
         ...state,
         areCommentsFetching: false,
         error: action.error,
+      };
+    case ADD_COMMENT:
+      let newPosts = [...state.posts];
+      const id = newPosts.findIndex(i => i.id === action.postId);
+      newPosts[id].comments = [...newPosts[id].comments, action.payload];
+
+      return {
+        ...state,
+        posts: newPosts
       };
   default:
     return state;
