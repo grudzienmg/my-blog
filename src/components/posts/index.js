@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 
 import Post from './styles/post';
@@ -11,14 +11,26 @@ const Posts = ({...props}) => {
     props.getPosts();
   }, []);
 
+  const [expandedComments] = useState(new Map());
+
+  const handleClick = (postId) => {
+    props.getPostComments(postId);
+
+    const isExpanded = !!expandedComments.get(postId);
+
+    expandedComments.set(postId, !isExpanded);
+  };
+
   const renderPosts = () => {
     return !isEmpty(props.posts) && props.posts.map((i, index) => {
+      const isExpanded = expandedComments.get(i.id);
+
       return (
         <Post key={index}>
           <Title>{i.title}</Title>
           <p>{i.body}</p>
-          <Button name='Pokaż komentarze' onClick={() => props.getPostComments(i.id)}/>
-          {i.comments && <Comments data={i.comments} />}
+          <Button name={isExpanded ? 'Ukryj komentarze' : 'Pokaż komentarze'} onClick={() => handleClick(i.id)}/>
+          {i.comments && isExpanded && <Comments data={i.comments} />}
         </Post>
       )
     })
