@@ -5,6 +5,7 @@ import Post from './styles/post';
 import Title from './styles/title';
 import Button from '../../atoms/Button';
 import Comments from '../comments';
+import Pagination from '../../atoms/Pagination';
 
 const Posts = ({...props}) => {
   useEffect(() => {
@@ -12,6 +13,8 @@ const Posts = ({...props}) => {
   }, []);
 
   const [expandedComments] = useState(new Map());
+  const [selectedPage, setSelectedPage] = useState(1);
+  const pageSize = 10;
 
   const handleClick = (postId) => {
     props.getPostComments(postId);
@@ -22,7 +25,10 @@ const Posts = ({...props}) => {
   };
 
   const renderPosts = () => {
-    return !isEmpty(props.posts) && props.posts.map((i, index) => {
+    const start = (selectedPage - 1) * pageSize;
+    const end = !start ? pageSize : selectedPage * pageSize;
+
+    return !isEmpty(props.posts) && props.posts.slice(start, end).map((i, index) => {
       const isExpanded = expandedComments.get(i.id);
 
       return (
@@ -39,11 +45,20 @@ const Posts = ({...props}) => {
         </Post>
       )
     })
+  };
+
+  const handlePageChange = (selectedPage) => {
+    setSelectedPage(selectedPage);
   }
 
   return (
     <Fragment>
       {renderPosts()}
+      {!isEmpty(props.posts) && <Pagination
+        totalRecords={props.posts.length}
+        pageSize={pageSize}
+        onChange={handlePageChange}
+      />}
     </Fragment>
   );
 }
