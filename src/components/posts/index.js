@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash-es';
 import Post from './styles/post';
 import Title from './styles/title';
 import Button from '../../atoms/Button';
+import Comments from '../comments';
 
 const Posts = ({...props}) => {
   useEffect(() => {
@@ -17,7 +18,7 @@ const Posts = ({...props}) => {
           <Title>{i.title}</Title>
           <p>{i.body}</p>
           <Button name='Pokaż komentarze' onClick={() => props.getPostComments(i.id)}/>
-          {i.comments && <p>i have comments</p>}
+          {i.comments && <Comments data={i.comments} />}
         </Post>
       )
     })
