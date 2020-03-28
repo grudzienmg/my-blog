@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 import Input from '../../atoms/Input';
 import Button from '../../atoms/Button';
@@ -72,5 +73,10 @@ class Form extends Component {
     );
   }
 }
+
+Form.propTypes = {
+  addComment: PropTypes.func,
+  postId: PropTypes.number,
+};
 
 export default Form;

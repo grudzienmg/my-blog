@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { isEmpty } from 'lodash-es';
+import PropTypes from 'prop-types';
 
 import SingleComment from './styles/singleComment';
 import Form from '../form';
@@ -29,7 +30,7 @@ const Comments = ({addComment, data, isFetching, removeComment}) => {
         </Fragment>
       );
     }
-  }
+  };
 
   return (
     <Fragment>
@@ -37,5 +38,12 @@ const Comments = ({addComment, data, isFetching, removeComment}) => {
     </Fragment>
   );
 }
+
+Comments.propTypes = {
+  addComment: PropTypes.func,
+  data: PropTypes.array,
+  isFetching: PropTypes.bool,
+  removeComment: PropTypes.func,
+};
 
 export default Comments;

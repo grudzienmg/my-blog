@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash-es';
+import PropTypes from 'prop-types';
 
 import Post from './styles/post';
 import Title from './styles/title';
@@ -50,7 +51,7 @@ const Posts = ({...props}) => {
 
   const handlePageChange = (selectedPage) => {
     setSelectedPage(selectedPage);
-  }
+  };
 
   return (
     <Fragment>
@@ -63,5 +64,14 @@ const Posts = ({...props}) => {
     </Fragment>
   );
 }
+
+Posts.propTypes = {
+  addComment: PropTypes.func,
+  areCommentsFetching: PropTypes.bool,
+  getPostComments: PropTypes.func,
+  getPosts: PropTypes.func,
+  posts: PropTypes.array,
+  removeComment: PropTypes.func,
+};
 
 export default Posts;

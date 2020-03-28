@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Tile from './styles/tile';
 
@@ -14,7 +15,7 @@ const Pagination = ({...props}) => {
   const handleClick = (selectedPage) => {
     setCurrentPage(selectedPage);
     props.onChange(selectedPage);
-  }
+  };
 
   const prepareTiles = () => {
     let tiles = [];
@@ -30,12 +31,19 @@ const Pagination = ({...props}) => {
     }
 
     return tiles;
-  }
+  };
+
   return (
     <Fragment>
       {prepareTiles()}
     </Fragment>
   );
 }
+
+Pagination.propTypes = {
+  onChange: PropTypes.func,
+  pageSize: PropTypes.number,
+  totalRecords: PropTypes.number,
+};
 
 export default Pagination;
