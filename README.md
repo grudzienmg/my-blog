@@ -1,12 +1,12 @@
-#My blog
+## My blog
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 `My blog` uses simple [JSONPlaceholder rest API](https://jsonplaceholder.typicode.com/) to get and display blog posts.
 User can display posts, shows single post comments and add/remove comment.
 
-##How to run
-###`npm install`
+## How to run
+### `npm install`
 To install project type `npm install`. It will install `My blog` with all dependencies.
 
 ### `npm start`
