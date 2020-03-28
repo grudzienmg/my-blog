@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import PaginationContainer from './styles/paginationContainer';
 import Tile from './styles/tile';
 
 const Pagination = ({...props}) => {
@@ -34,9 +35,9 @@ const Pagination = ({...props}) => {
   };
 
   return (
-    <Fragment>
+    <PaginationContainer>
       {prepareTiles()}
-    </Fragment>
+    </PaginationContainer>
   );
 }
 

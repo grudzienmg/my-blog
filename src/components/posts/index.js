@@ -1,7 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
 
+import PostsContainer from './styles/postsContainer';
 import Post from './styles/post';
 import Title from './styles/title';
 import Button from '../../atoms/Button';
@@ -16,6 +17,8 @@ const Posts = ({...props}) => {
   const [expandedComments] = useState(new Map());
   const [selectedPage, setSelectedPage] = useState(1);
   const pageSize = 10;
+
+  const containerRef = useRef();
 
   const handleClick = (postId) => {
     props.getPostComments(postId);
@@ -51,17 +54,19 @@ const Posts = ({...props}) => {
 
   const handlePageChange = (selectedPage) => {
     setSelectedPage(selectedPage);
+
+    containerRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <Fragment>
+    <PostsContainer ref={containerRef}>
       {renderPosts()}
       {!isEmpty(props.posts) && <Pagination
         totalRecords={props.posts.length}
         pageSize={pageSize}
         onChange={handlePageChange}
       />}
-    </Fragment>
+    </PostsContainer>
   );
 }
 
