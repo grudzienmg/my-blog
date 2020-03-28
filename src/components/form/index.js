@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 
 import Input from '../../atoms/Input';
 import Button from '../../atoms/Button';
+import Error from './styles/error';
 
 class Form extends Component {
   state = {
+    emailError: null,
     formValues: {
       name: '',
       email: '',
       body: '',
-    }
+    },
   }
 
   handleInputChange = (value, fieldName) => {
@@ -22,6 +24,12 @@ class Form extends Component {
     });
   }
 
+  isEmailValid = (value) => {
+    const re = /\S+@\S+\.\S+/;
+
+    return re.test(value);
+  }
+
   canConfirm = () => {
     const { formValues } = this.state;
 
@@ -29,6 +37,13 @@ class Form extends Component {
   }
 
   handleClick = () => {
+    const { formValues } = this.state;
+
+    if (!this.isEmailValid(formValues.email)) {
+      this.setState({emailError: 'Nieprawidłowy format'});
+      return;
+    }
+
     const payload = {
       postId: this.props.postId,
       id: Math.floor(Math.random() * 100),
@@ -38,6 +53,7 @@ class Form extends Component {
     this.props.addComment(this.props.postId, payload);
 
     this.setState({
+      emailError: null,
       formValues: {
         name: '',
         email: '',
@@ -47,7 +63,7 @@ class Form extends Component {
   }
 
   render() {
-    const { formValues } = this.state;
+    const { emailError, formValues } = this.state;
 
     return (
       <Fragment>
@@ -62,6 +78,7 @@ class Form extends Component {
           onChange={e => this.handleInputChange(e.target.value, 'email')}
           value={formValues.email}
         />
+        {emailError && <Error>{emailError}</Error>}
         <Input
           label={'Treść'}
           textarea
