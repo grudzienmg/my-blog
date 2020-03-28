@@ -6,7 +6,6 @@ import {
 } from './actionTypes';
 
 const initialState = {
-  areCommentsFetching: false,
   error: null,
   isFetching: false,
   postId: null,
@@ -14,7 +13,7 @@ const initialState = {
 };
 
 export default (state=initialState, action) => {
-  const idx = state.posts.findIndex(i => i.id === state.postId);
+  const idx = state.posts.findIndex(i => i.id === (action.postId || state.postId));
   let posts = [...state.posts];
 
   switch (action.type) {
@@ -36,17 +35,20 @@ export default (state=initialState, action) => {
         error: action.error,
       };
     case GET_POST_COMMENTS:
-      return {
-        ...state,
-        areCommentsFetching: true,
-        postId: action.postId,
-      };
-    case GET_POST_COMMENTS_SUCCESS:
-      state.posts[idx].comments = action.payload;
+      posts[idx].areCommentsFetching = true;
 
       return {
         ...state,
-        areCommentsFetching: false,
+        postId: action.postId,
+        posts: posts,
+      };
+    case GET_POST_COMMENTS_SUCCESS:
+      posts[idx].comments = action.payload;
+      posts[idx].areCommentsFetching = false;
+
+      return {
+        ...state,
+        posts: posts,
       };
     case GET_POST_COMMENTS_FAILURE:
       return {

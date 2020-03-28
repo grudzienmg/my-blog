@@ -42,7 +42,7 @@ const Posts = ({...props}) => {
           <Button name={isExpanded ? 'Ukryj komentarze' : 'Pokaż komentarze'} onClick={() => handleClick(i.id)}/>
           {isExpanded && <Comments
             data={i.comments}
-            isFetching={props.areCommentsFetching}
+            isFetching={i.areCommentsFetching}
             addComment={props.addComment}
             removeComment={props.removeComment}
             />
@@ -72,7 +72,6 @@ const Posts = ({...props}) => {
 
 Posts.propTypes = {
   addComment: PropTypes.func,
-  areCommentsFetching: PropTypes.bool,
   getPostComments: PropTypes.func,
   getPosts: PropTypes.func,
   posts: PropTypes.array,
