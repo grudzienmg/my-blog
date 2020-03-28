@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react';
+import { isEmpty } from 'lodash-es';
 
 import SingleComment from './styles/singleComment';
 import Form from '../form';
+import Button from '../../atoms/Button';
 
-const Comments = ({addComment, data, isFetching}) => {
+const Comments = ({addComment, data, isFetching, removeComment}) => {
   const renderComments = () => {
     return data && data.map((comment, index) => {
       return (
         <SingleComment key={index}>
           <span>{comment.name} / {comment.email}</span>
           <p>{comment.body}</p>
+          <Button name='Usuń komentarz' onClick={() => removeComment(comment.postId, comment.id)}/>
         </SingleComment>
       );
     })
@@ -22,7 +25,7 @@ const Comments = ({addComment, data, isFetching}) => {
       return (
         <Fragment>
           {renderComments()}
-          <Form addComment={addComment} postId={data[0].postId} />
+          <Form addComment={addComment} postId={!isEmpty(data) && data[0].postId} />
         </Fragment>
       );
     }

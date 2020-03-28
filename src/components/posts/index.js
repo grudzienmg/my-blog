@@ -40,6 +40,7 @@ const Posts = ({...props}) => {
             data={i.comments}
             isFetching={props.areCommentsFetching}
             addComment={props.addComment}
+            removeComment={props.removeComment}
             />
           }
         </Post>

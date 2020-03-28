@@ -1,7 +1,8 @@
 import {
   GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE,
   GET_POST_COMMENTS, GET_POST_COMMENTS_SUCCESS, GET_POST_COMMENTS_FAILURE,
-  ADD_COMMENT
+  ADD_COMMENT,
+  REMOVE_COMMENT
 } from './actionTypes';
 
 export const getPosts = () => ({
@@ -37,4 +38,10 @@ export const addComment = (postId, payload) => ({
   type: ADD_COMMENT,
   postId,
   payload,
+});
+
+export const removeComment = (postId, commentId) => ({
+  type: REMOVE_COMMENT,
+  postId,
+  commentId,
 });

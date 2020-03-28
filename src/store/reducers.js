@@ -2,6 +2,7 @@ import {
   GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE,
   GET_POST_COMMENTS, GET_POST_COMMENTS_SUCCESS, GET_POST_COMMENTS_FAILURE,
   ADD_COMMENT,
+  REMOVE_COMMENT,
 } from './actionTypes';
 
 const initialState = {
@@ -13,6 +14,9 @@ const initialState = {
 };
 
 export default (state=initialState, action) => {
+  const idx = state.posts.findIndex(i => i.id === state.postId);
+  let posts = [...state.posts];
+
   switch (action.type) {
     case GET_POSTS:
       return {
@@ -38,7 +42,6 @@ export default (state=initialState, action) => {
         postId: action.postId,
       };
     case GET_POST_COMMENTS_SUCCESS:
-      const idx = state.posts.findIndex(i => i.id === state.postId);
       state.posts[idx].comments = action.payload;
 
       return {
@@ -52,13 +55,19 @@ export default (state=initialState, action) => {
         error: action.error,
       };
     case ADD_COMMENT:
-      let newPosts = [...state.posts];
-      const id = newPosts.findIndex(i => i.id === action.postId);
-      newPosts[id].comments = [...newPosts[id].comments, action.payload];
+      posts[idx].comments = [...posts[idx].comments, action.payload];
 
       return {
         ...state,
-        posts: newPosts
+        posts: posts
+      };
+    case REMOVE_COMMENT:
+      const commentIdx = posts[idx].comments.findIndex(i => i.id === action.commentIdx);
+      posts[idx].comments.splice(commentIdx, 1);
+
+      return {
+        ...state,
+        posts: posts
       };
   default:
     return state;
