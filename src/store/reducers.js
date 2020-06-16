@@ -64,7 +64,7 @@ export default (state=initialState, action) => {
         posts: posts
       };
     case REMOVE_COMMENT:
-      const commentIdx = posts[idx].comments.findIndex(i => i.id === action.commentIdx);
+      const commentIdx = posts[idx].comments.findIndex(i => i.id === action.commentId);
       posts[idx].comments.splice(commentIdx, 1);
 
       return {
