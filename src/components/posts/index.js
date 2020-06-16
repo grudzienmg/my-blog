@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
 
@@ -14,18 +14,20 @@ const Posts = ({...props}) => {
     props.getPosts();
   }, []);
 
-  const [expandedComments] = useState(new Map());
+  const [expandedComments, setExpandedComments] = useState(new Map());
   const [selectedPage, setSelectedPage] = useState(1);
   const pageSize = 10;
 
   const containerRef = useRef();
 
   const handleClick = (postId) => {
-    props.getPostComments(postId);
-
     const isExpanded = !!expandedComments.get(postId);
 
-    expandedComments.set(postId, !isExpanded);
+    if (!isExpanded) {
+      props.getPostComments(postId);
+    }
+
+    setExpandedComments(new Map(expandedComments.set(postId, !isExpanded)));
   };
 
   const renderPosts = () => {
@@ -78,4 +80,4 @@ Posts.propTypes = {
   removeComment: PropTypes.func,
 };
 
-export default Posts;
+export default memo(Posts);
